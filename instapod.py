@@ -20,7 +20,7 @@ for child in explanation[0].iter():
     description = description + " "+child.text.strip()   
     description = description + " "+ex2.pop().strip()
 description = description+" \n#nasa #space #esa #apod #astronomy #astrophotography"
-print(description)
+#print(description)
 try:
     InstagramAPI = InstagramAPI("username", "password")
     InstagramAPI.login()  # login
