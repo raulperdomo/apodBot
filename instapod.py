@@ -43,7 +43,7 @@ credit = et.xpath('/html/body/center[2]/b[2]')
 creditString = '📷: '
 creditString = creditString + credit[0].tail.strip() + " "
 credit = et.xpath('/html/body/center[2]/a')
-title = et.xpath('/html/body/center[2]/b[1]')[0].text 
+title = et.xpath('/html/body/center[2]/b[1]')[0].text.strip() + '\n'
 for text in credit:
     creditString = creditString + text.text.strip()
     creditString = creditString + " " +text.tail.strip()
