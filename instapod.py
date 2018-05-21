@@ -4,6 +4,7 @@ from PIL import Image
 import requests
 from lxml import html
 import urllib
+import sys
 from InstagramAPI import InstagramAPI
 
 apod = requests.get('http://apod.nasa.gov')
@@ -19,12 +20,12 @@ if img.size[0] > img.size[1]:
     horizontal_padding = (longer_side - img.size[0]) / 2
     vertical_padding = (longer_side - img.size[1]) / 2
     imgNew = img.crop(
-        (
-        -horizontal_padding,
-        -vertical_padding,
-        img.size[0] + horizontal_padding,
-        img.size[1] + vertical_padding
-        )
+	(
+	-horizontal_padding,
+	-vertical_padding,
+	img.size[0] + horizontal_padding,
+	img.size[1] + vertical_padding
+	)
     )
     imgNew.save("./apodPadded.jpg")
     
@@ -42,16 +43,18 @@ credit = et.xpath('/html/body/center[2]/b[2]')
 creditString = '📷: '
 creditString = creditString + credit[0].tail.strip() + " "
 credit = et.xpath('/html/body/center[2]/a')
+title = et.xpath('/html/body/center[2]/b[1]')[0].text 
 for text in credit:
     creditString = creditString + text.text.strip()
     creditString = creditString + " " +text.tail.strip()
 
-description = description + " " + creditString
-print(description)
+description = title + description + " " + creditString
 try:
-    InstagramAPI = InstagramAPI("username", "password")
-    InstagramAPI.login()  # login
-    photo_path = './apodPadded.jpg'
-    InstagramAPI.uploadPhoto(photo_path, caption=description)
+	InstagramAPI = InstagramAPI("username", "password")
+	InstagramAPI.login()  # login
+	photo_path = './apodPadded.jpg'
+	InstagramAPI.uploadPhoto(photo_path, caption=description)
 except:
-    print("Could not post to Instagram")
+	print("Could not post to Instagram" + str(sys.exc_info()[0]))
+
+
