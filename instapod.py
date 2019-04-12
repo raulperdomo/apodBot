@@ -15,7 +15,7 @@ apodPath = "http://apod.nasa.gov/"+imagePath
 print(apodPath)
 urllib.request.urlretrieve(apodPath,'./apod.jpg')
 img = Image.open('./apod.jpg')
-if img.size[0] > img.size[1]:
+if not img.size[0] == img.size[1]:
     longer_side = max(img.size)
     horizontal_padding = (longer_side - img.size[0]) / 2
     vertical_padding = (longer_side - img.size[1]) / 2
