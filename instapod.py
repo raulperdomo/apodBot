@@ -35,8 +35,16 @@ else:
 explanation = et.xpath('/html/body/p[1]')[0]
 description = ' '.join(explanation.text_content().split())
 description = description + '\n#nasa #space #esa #apod #astronomy #astrophotography\n'
-credit = et.xpath('/html/body/center[2]/a')[0].text_content()
-creditString = '📷: '+ ' '.join(credit.split())
+credit = et.xpath('/html/body/center[2]')[0].text_content()
+creditLines = credit.splitlines()
+for i,line in enumerate(creditLines):
+    if 'Credit' in line:
+        if 'Copy' in creditLines[i+1]:
+            credit = creditLines[i+2:]
+        else:
+            credit = creditLines[i+1:]
+credit = [ele.strip() for ele in credit if ele != '']
+creditString = '📷: '+ ' '.join(credit)
 title = et.xpath('/html/body/center[2]/b[1]')[0].text.strip() + '\n'
 description = title + description + creditString
 print(description)
